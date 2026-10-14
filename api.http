@@ -1,0 +1,44 @@
+### Testing API dengan ekstensi VS Code "REST Client" (humao.rest-client)
+### Klik "Send Request" di atas setiap request.
+
+@baseUrl = http://localhost:8000/api
+
+### Login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### List admin
+GET {{baseUrl}}/admin
+
+### Cari admin
+GET {{baseUrl}}/admin?search=adm
+
+### Detail admin
+GET {{baseUrl}}/admin/1
+
+### Tambah admin
+POST {{baseUrl}}/admin
+Content-Type: application/json
+
+{
+  "username": "budi",
+  "password": "rahasia123"
+}
+
+### Update admin (field opsional)
+PUT {{baseUrl}}/admin/2
+Content-Type: application/json
+
+{
+  "username": "budi_update",
+  "password": "passwordbaru"
+}
+
+### Hapus admin
+DELETE {{baseUrl}}/admin/2
+

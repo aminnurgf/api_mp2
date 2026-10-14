@@ -1,0 +1,63 @@
+{
+  "info": {
+    "name": "Lumen API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000/api" },
+    { "key": "admin_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/login",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}" }
+      }
+    },
+    {
+      "name": "List Admin",
+      "request": { "method": "GET", "url": "{{base_url}}/admin" }
+    },
+    {
+      "name": "Search Admin",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/admin?search=adm", "host": ["{{base_url}}"], "path": ["admin"], "query": [{ "key": "search", "value": "adm" }] }
+      }
+    },
+    {
+      "name": "Detail Admin",
+      "request": { "method": "GET", "url": "{{base_url}}/admin/{{admin_id}}" }
+    },
+    {
+      "name": "Create Admin",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('admin_id', pm.response.json().data.id); }"] }
+      }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/admin",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"budi\",\n  \"password\": \"rahasia123\"\n}" }
+      }
+    },
+    {
+      "name": "Update Admin",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/admin/{{admin_id}}",
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"budi_update\"\n}" }
+      }
+    },
+    {
+      "name": "Delete Admin",
+      "request": { "method": "DELETE", "url": "{{base_url}}/admin/{{admin_id}}" }
+    }
+  ]
+}
+

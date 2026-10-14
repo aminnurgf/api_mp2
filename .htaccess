@@ -1,0 +1,26 @@
+# Untuk shared hosting (TinkerHost/InfinityFree, dll) yang document root-nya = folder project.
+# Semua request diteruskan ke folder public/, dan file sensitif diblokir.
+
+Options -Indexes
+
+<FilesMatch "^(\.env.*|composer\.(json|lock)|artisan|phpunit\.xml|.*\.md|api\.http|postman_collection\.json)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Blokir akses langsung ke folder internal
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)(/.*)?$ - [F,L]
+
+    # Teruskan semua request ke public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
